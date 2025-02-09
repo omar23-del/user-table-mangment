@@ -1,0 +1,97 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-sm-12">
+      <div class="header">
+        <h2>User <b>Management</b></h2>
+        <button class="custom-btn" (click)="toggleCreateform()">
+          <i class='bx bxs-user-plus fs-3'></i> <span>Add New User</span>
+        </button>
+      </div>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col">Date Created</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.dateCreated }}</td>
+            <td>
+              <i (click)="edituser(user)"
+                class='bx bxs-edit-alt text-primary'></i>
+              <i (click)="deleteuser(user.id)"
+                class='bx bxs-trash-alt text-danger'></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Edit Form -->
+      <div *ngIf="currentuser" class="edit-form">
+        <i (click)="closeeditform()" class="close-icon bx bx-x"></i>
+        <form (ngSubmit)="saveuser()">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" [(ngModel)]="currentuser.name"
+              name="name" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" [(ngModel)]="currentuser.email"
+              name="email" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="role">Role</label>
+            <select id="role" [(ngModel)]="currentuser.role" name="role"
+              class="form-control">
+              <option value="Admin">Admin</option>
+              <option value="User">User</option>
+              <option value="Editor">Editor</option>
+            </select>
+          </div>
+          <button type="submit" class="edit-save">Save Changes</button>
+        </form>
+      </div>
+
+      <!-- Create Form -->
+      <div *ngIf="iscreateuserformopen" class="create-form">
+        <i (click)="closecreateform()" class="close-icon bx bx-x"></i>
+        <form (ngSubmit)="createnewuser()">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" [(ngModel)]="newuser.name" name="name"
+              class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" [(ngModel)]="newuser.email"
+              name="email" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="role">Role</label>
+            <select id="role" [(ngModel)]="newuser.role" name="role"
+              class="form-control">
+              <option value="Admin">Admin</option>
+              <option value="User">User</option>
+              <option value="Editor">Editor</option>
+            </select>
+          </div>
+
+          <button type="submit" class="create-save">Create User</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
